@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yashWeather</title>
+</head>
+<body>
+    <div>
+    <img src="C:\Users\Dell\OneDrive\Desktop\weather5.webp" alt="weather5" width="700" height="200" >
+    <img src="C:\Users\Dell\OneDrive\Desktop\weather6.jpg" alt="weather6" width="200" height="200" class="c3">
+    <img src="C:\Users\Dell\OneDrive\Desktop\download.jpg" alt="weather7" width="200" height="200" class="c4">
+
+    <h1 style=" text-decoration: overline underline; text-align: center; color: rgb(10, 105, 238); font-style: italic; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 20;">Weather Forecast of Toronto By YC54</h1>
+    <img src="C:\Users\Dell\OneDrive\Desktop\weather2.png" alt="weather2" width="200" height="200" class="c1">
+    <img src="C:\Users\Dell\OneDrive\Desktop\weather3.jpg" alt="weather3" width="200" height="200" class="c2">
+    <h1 class="b1" id="currentTemp" style="color: rgb(241, 14, 123);"></h1>
+    <h1 class="b1" id="maxTemp" style="color: orange;"></h1>
+    <h1 class="b1" id="minTemp" style="color: rgb(7, 211, 7);"></h1>
+    
+    
+    <p id="tempr" style="color: red; font-size: 50px;">weather update:</p>
+    
+
+
+    <script>
+        const fetchData = async () => {
+            const url = 'https://open-weather13.p.rapidapi.com/city/toronto/EN';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '00e8abd3c7msh693de161b7fd8abp1b2bc8jsn817708022fb9',
+                    'X-RapidAPI-Host': 'open-weather13.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const data = await response.json();
+
+                // Extract temperature data from the API response
+                const currentTempFahrenheit = data.main.temp;
+                const maxTempFahrenheit = data.main.temp_max;
+                const minTempFahrenheit = data.main.temp_min;
+
+                // Convert temperatures from Fahrenheit to Celsius
+                const currentTempCelsius = (currentTempFahrenheit - 32) * (5/9);
+                const maxTempCelsius = (maxTempFahrenheit - 32) * (5/9);
+                const minTempCelsius = (minTempFahrenheit - 32) * (5/9);
+
+                // Update HTML content with converted temperatures
+                document.getElementById('currentTemp').textContent = `Current Temperature: ${currentTempCelsius.toFixed(2)}°C`;
+                document.getElementById('maxTemp').textContent = `Maximum Temperature: ${maxTempCelsius.toFixed(2)}°C`;
+                document.getElementById('minTemp').textContent = `Minimum Temperature: ${minTempCelsius.toFixed(2)}°C`;
+           
+                if (currentTempCelsius<=10){
+            
+            document.getElementById("tempr").innerHTML ="weather update: It is cold day today.";
+           } else {
+            document.getElementById("tempr").innerHTML ="weather update:It is a warm day today.";
+           }
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                // Display error message if there's an issue fetching data
+                document.getElementById('currentTemp').textContent = 'Error fetching weather data';
+            }
+        };
+
+        // Call the async function to fetch and display weather data
+        fetchData();
+
+        
+    </script>
+    <style>
+        body{
+            text-align: center;
+
+        }
+
+        .b1{
+            color: black;
+            font-style: italic;
+        }
+
+        .c1 {
+  float: left;
+  padding: 5px;
+}
+.c3 {
+  float: left;
+  padding: 5px;
+}
+
+.c2{
+  float: right;
+  padding: 5px;
+}
+.c4{
+  float: right;
+  padding: 5px;
+}
+    </style>
+    </div>
+</body>
+</html>
